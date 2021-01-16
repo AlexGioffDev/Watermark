@@ -88,9 +88,9 @@ class Ui_MainWindow(object):
                 txt = Image.new('RGBA', img_select.size, (255,255,255,0))
                 MAX_W, MAX_H = img_select.size
                 draw = ImageDraw.Draw(txt)
-                font = ImageFont.truetype("/usr/share/fonts/truetype/freefont/FreeMono.ttf",size=80)
+                font = ImageFont.truetype("/usr/share/fonts/truetype/freefont/FreeMono.ttf",size=90)
                 w, h = draw.textsize(text, font)
-                draw.text(((MAX_W - w) / 2, (MAX_H - h) / 2), text, fill=(0,0,0, 25), font=font)
+                draw.text(((MAX_W - w) / 2, (MAX_H - h) / 2), text, fill=(0,0,0, 100), font=font)
                 combined = Image.alpha_composite(img_select, txt)
                 combined.save(self.image_path)
                 pixmap = QPixmap(self.image_path)

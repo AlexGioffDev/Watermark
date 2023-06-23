@@ -1,6 +1,7 @@
-from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QFileDialog
-from PyQt5.QtGui import QPixmap
+from PyQt6 import QtCore, QtGui, QtWidgets
+from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import QFileDialog
+from PyQt6.QtGui import QPixmap
 from PIL import Image, ImageDraw, ImageFont
 
 class Ui_MainWindow(object):
@@ -20,7 +21,7 @@ class Ui_MainWindow(object):
                 font.setWeight(75)
                 self.Title.setFont(font)
                 self.Title.setStyleSheet("color: #dddddd;")
-                self.Title.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignTop)
+                self.Title.setAlignment(Qt.AlignmentFlag.AlignHCenter|QtCore.Qt.AlignmentFlag.AlignTop)
                 self.Title.setObjectName("Title")
                 self.ImageButton = QtWidgets.QPushButton(self.centralwidget)
                 self.ImageButton.setGeometry(QtCore.QRect(10, 90, 221, 41))
@@ -88,9 +89,9 @@ class Ui_MainWindow(object):
                 txt = Image.new('RGBA', img_select.size, (255,255,255,0))
                 MAX_W, MAX_H = img_select.size
                 draw = ImageDraw.Draw(txt)
-                font = ImageFont.truetype("/usr/share/fonts/truetype/freefont/FreeMono.ttf",size=90)
-                w, h = draw.textsize(text, font)
-                draw.text(((MAX_W - w) / 2, (MAX_H - h) / 2), text, fill=(0,0,0, 100), font=font)
+                font = ImageFont.FreeTypeFont(r"./font/FreeMono.ttf",300)
+                values = draw.textbbox((0, 0),text=text, font=font)
+                draw.text(((MAX_W - values[2]) / 2, (MAX_H - values[3]) / 2), text, fill=(0,0,0, 100), font=font)
                 combined = Image.alpha_composite(img_select, txt)
                 combined.save(self.image_path)
                 pixmap = QPixmap(self.image_path)
@@ -112,4 +113,4 @@ if __name__ == "__main__":
         ui = Ui_MainWindow()
         ui.setupUi(MainWindow)
         MainWindow.show()
-        sys.exit(app.exec_())
+        sys.exit(app.exec())
